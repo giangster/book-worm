@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  TextInput
+} from "react-native";
 import BookCount from "./components/BookCount";
 
 class App extends React.Component {
@@ -26,7 +33,34 @@ class App extends React.Component {
           >
             <Text style={{ fontSize: 24 }}>Book Worm</Text>
           </View>
-          <View style={{ flex: 1, backgroundColor: "red" }} />
+          <View style={{ height: 50 }}>
+            <TextInput style={{ flex: 1, backgroundColor: "grey" }}></TextInput>
+          </View>
+          <View style={{ flex: 1, marginTop: 550 }}>
+            <TouchableOpacity
+              style={{ position: "absolute", bottom: 20, right: 20 }}
+            >
+              <View
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 25,
+                  backgroundColor: "#AAD1E6",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: 30
+                  }}
+                >
+                  +
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
           <View
             style={{
               height: 70,
