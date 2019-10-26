@@ -5,7 +5,8 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  FlatList
 } from "react-native";
 import BookCount from "./components/BookCount";
 import { Ionicons } from "@expo/vector-icons";
@@ -37,8 +38,35 @@ class App extends React.Component {
       totalCount: this.state.totalCount + 1,
       readingCount: this.state.readingCount + 1
     });
-    console.log(this.state.books);
   };
+
+  renderItem = (item, index) => (
+    <View
+      style={{
+        height: 50,
+        flexDirection: "row",
+        margin: 5
+      }}
+    >
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <Text>{item}</Text>
+      </View>
+      <TouchableOpacity onPress={() => this.addBook(this.state.textInput)}>
+        <View
+          style={{
+            width: 50,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#89cff0"
+          }}
+        >
+          <Text style={{ fontWeight: "400", color: "white" }}>
+            Mark as Read
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
 
   render() {
     return (
@@ -53,15 +81,16 @@ class App extends React.Component {
               justifyContent: "center"
             }}
           >
-            <Text style={{ fontSize: 24 }}>Book Worm</Text>
+            <Text style={{ fontSize: 24, fontWeight: "500" }}>Book Worm</Text>
           </View>
           {this.state.isAddNewBookVisible && (
-            <View style={{ height: 50, flexDirection: "row" }}>
+            <View style={{ height: 50, flexDirection: "row", paddingLeft: 6 }}>
               <TextInput
+                clearButtonMode="always"
                 onChangeText={text => this.setState({ textInput: text })}
                 style={{
                   flex: 1,
-                  paddingLeft: 5,
+                  paddingLeft: 6,
                   backgroundColor: "#ececec"
                 }}
                 placeholder="Enter book name"
@@ -72,7 +101,6 @@ class App extends React.Component {
                 <View
                   style={{
                     width: 50,
-
                     alignItems: "center",
                     justifyContent: "center"
                   }}
@@ -88,7 +116,6 @@ class App extends React.Component {
                 <View
                   style={{
                     width: 50,
-
                     alignItems: "center",
                     justifyContent: "center"
                   }}
@@ -98,7 +125,17 @@ class App extends React.Component {
               </TouchableOpacity>
             </View>
           )}
-          <View style={{ flex: 1, marginTop: 500 }}>
+          <View style={{ height: 580 }}>
+            <FlatList
+              data={this.state.books}
+              renderItem={({ item }, index) => this.renderItem(item, index)}
+              keyExtractor={(item, index) => index.toString()}
+              ListEmptyComponent={
+                <View style={{ marginTop: 50, alignItems: "center" }}>
+                  <Text style={{ fontSize: 20 }}>No books</Text>
+                </View>
+              }
+            />
             <TouchableOpacity
               style={{ position: "absolute", bottom: 20, right: 20 }}
               onPress={this.showAddNewBook}
