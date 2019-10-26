@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import BookCount from "./components/BookCount";
 import { Ionicons } from "@expo/vector-icons";
+import CustomActionButton from "./components/CustomActionButton";
 
 class App extends React.Component {
   constructor() {
@@ -59,21 +60,11 @@ class App extends React.Component {
       <View style={{ flex: 1, justifyContent: "center", padding: 5 }}>
         <Text>{item}</Text>
       </View>
-      <TouchableOpacity onPress={() => this.markAsRead(item, index)}>
-        <View
-          style={{
-            width: 100,
-            height: 50,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#89cff0"
-          }}
-        >
-          <Text style={{ fontWeight: "400", color: "white" }}>
-            Mark as Read
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <CustomActionButton onPress={() => this.markAsRead(item, index)}>
+        <Text style={{ fontWeight: "400", color: "#89cff0" }}>
+          Mark as Read
+        </Text>
+      </CustomActionButton>
     </View>
   );
 
@@ -104,34 +95,19 @@ class App extends React.Component {
                 }}
                 placeholder="Enter book name"
               />
-              <TouchableOpacity
+
+              <CustomActionButton
                 onPress={() => this.addBook(this.state.textInput)}
               >
-                <View
-                  style={{
-                    width: 50,
-                    alignItems: "center",
-                    justifyContent: "center"
-                  }}
-                >
-                  <Ionicons
-                    name="ios-checkmark-circle"
-                    color="#89cff0"
-                    size={50}
-                  />
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this.hideAddNewBook}>
-                <View
-                  style={{
-                    width: 50,
-                    alignItems: "center",
-                    justifyContent: "center"
-                  }}
-                >
-                  <Ionicons name="ios-close-circle" color="#A9A9A9" size={50} />
-                </View>
-              </TouchableOpacity>
+                <Ionicons
+                  name="ios-checkmark-circle"
+                  color="#89cff0"
+                  size={50}
+                />
+              </CustomActionButton>
+              <CustomActionButton onPress={this.hideAddNewBook}>
+                <Ionicons name="ios-close-circle" color="#A9A9A9" size={50} />
+              </CustomActionButton>
             </View>
           )}
           <View style={{ height: 580 }}>
