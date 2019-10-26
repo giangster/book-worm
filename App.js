@@ -8,6 +8,7 @@ import {
   TextInput
 } from "react-native";
 import BookCount from "./components/BookCount";
+import { Ionicons } from "@expo/vector-icons";
 
 class App extends React.Component {
   constructor() {
@@ -15,9 +16,19 @@ class App extends React.Component {
     this.state = {
       totalCount: 0,
       readingCount: 0,
-      readCount: 0
+      readCount: 0,
+      isAddNewBookVisible: false
     };
   }
+
+  showAddNewBook = () => {
+    this.setState({ isAddNewBookVisible: true });
+  };
+
+  hideAddNewBook = () => {
+    this.setState({ isAddNewBookVisible: false });
+  };
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -33,19 +44,57 @@ class App extends React.Component {
           >
             <Text style={{ fontSize: 24 }}>Book Worm</Text>
           </View>
-          <View style={{ height: 50 }}>
-            <TextInput style={{ flex: 1, backgroundColor: "grey" }}></TextInput>
-          </View>
-          <View style={{ flex: 1, marginTop: 550 }}>
+          {this.state.isAddNewBookVisible && (
+            <View style={{ height: 50, flexDirection: "row" }}>
+              <TextInput
+                style={{
+                  flex: 1,
+                  paddingLeft: 5,
+                  backgroundColor: "#ececec"
+                }}
+                placeholder="Enter book name"
+              />
+              <TouchableOpacity>
+                <View
+                  style={{
+                    width: 50,
+
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Ionicons
+                    name="ios-checkmark-circle"
+                    color="#89cff0"
+                    size={50}
+                  />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.hideAddNewBook}>
+                <View
+                  style={{
+                    width: 50,
+
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <Ionicons name="ios-close-circle" color="#A9A9A9" size={50} />
+                </View>
+              </TouchableOpacity>
+            </View>
+          )}
+          <View style={{ flex: 1, marginTop: 500 }}>
             <TouchableOpacity
               style={{ position: "absolute", bottom: 20, right: 20 }}
+              onPress={this.showAddNewBook}
             >
               <View
                 style={{
                   width: 50,
                   height: 50,
                   borderRadius: 25,
-                  backgroundColor: "#AAD1E6",
+                  backgroundColor: "#89cff0",
                   alignItems: "center",
                   justifyContent: "center"
                 }}
