@@ -17,7 +17,9 @@ class App extends React.Component {
       totalCount: 0,
       readingCount: 0,
       readCount: 0,
-      isAddNewBookVisible: false
+      isAddNewBookVisible: false,
+      textInput: null,
+      books: []
     };
   }
 
@@ -27,6 +29,15 @@ class App extends React.Component {
 
   hideAddNewBook = () => {
     this.setState({ isAddNewBookVisible: false });
+  };
+
+  addBook = book => {
+    this.setState({
+      books: [...this.state.books, book],
+      totalCount: this.state.totalCount + 1,
+      readingCount: this.state.readingCount + 1
+    });
+    console.log(this.state.books);
   };
 
   render() {
@@ -47,6 +58,7 @@ class App extends React.Component {
           {this.state.isAddNewBookVisible && (
             <View style={{ height: 50, flexDirection: "row" }}>
               <TextInput
+                onChangeText={text => this.setState({ textInput: text })}
                 style={{
                   flex: 1,
                   paddingLeft: 5,
@@ -54,7 +66,9 @@ class App extends React.Component {
                 }}
                 placeholder="Enter book name"
               />
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.addBook(this.state.textInput)}
+              >
                 <View
                   style={{
                     width: 50,
