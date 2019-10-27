@@ -75,8 +75,6 @@ class App extends React.Component {
           <View
             style={{
               height: 70,
-              borderBottomWidth: 0.5,
-              borderBottomColor: "#E9E9E9",
               alignItems: "center",
               justifyContent: "center"
             }}
@@ -84,12 +82,19 @@ class App extends React.Component {
             <Text style={{ fontSize: 24, fontWeight: "500" }}>Book Worm</Text>
           </View>
           {this.state.isAddNewBookVisible && (
-            <View style={{ height: 50, flexDirection: "row", paddingLeft: 6 }}>
+            <View
+              style={{
+                height: 50,
+                flexDirection: "row",
+                paddingLeft: 8
+              }}
+            >
               <TextInput
                 clearButtonMode="always"
                 onChangeText={text => this.setState({ textInput: text })}
                 style={{
                   flex: 1,
+                  marginRight: 3,
                   paddingLeft: 6,
                   backgroundColor: "#ececec"
                 }}
