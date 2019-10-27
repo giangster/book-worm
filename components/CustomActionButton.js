@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import PropTypes from "prop-types";
 
 const CustomActionButton = ({ children, onPress }) => {
   return (
@@ -7,6 +8,16 @@ const CustomActionButton = ({ children, onPress }) => {
       <View style={styles.button}>{children}</View>
     </TouchableOpacity>
   );
+};
+
+CustomActionButton.propTypes = {
+  onPress: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
+  style: PropTypes.object
+};
+
+CustomActionButton.defaultProps = {
+  style: {}
 };
 
 const styles = StyleSheet.create({

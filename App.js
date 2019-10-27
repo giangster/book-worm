@@ -115,7 +115,7 @@ class App extends React.Component {
               </CustomActionButton>
             </View>
           )}
-          <View style={{ height: 580 }}>
+          <View style={{ height: 530 }}>
             <FlatList
               data={this.state.books}
               renderItem={({ item }, index) => this.renderItem(item, index)}
