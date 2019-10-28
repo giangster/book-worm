@@ -63,11 +63,11 @@ class HomeScreen extends Component {
   markAsRead = (selectedBook, index) => {
     let newList = this.state.books.filter(book => book !== selectedBook);
 
-    this.setState(prevState => ({
+    this.setState({
       books: newList,
-      readingCount: prevState.readingCount - 1,
-      readCount: prevState.readCount + 1
-    }));
+      readingCount: this.state.readingCount - 1,
+      readCount: this.state.readCount + 1
+    });
   };
 
   renderItem = (item, index) => (
@@ -104,10 +104,14 @@ class HomeScreen extends Component {
                 style={styles.checkmarkButton}
                 onPress={() => this.addBook(this.state.textInputdata)}
               >
-                <Ionicons name="ios-checkmark" size={40} color="white" />
+                <Ionicons
+                  name="ios-checkmark-circle"
+                  size={40}
+                  color="#89cff0"
+                />
               </CustomActionButton>
               <CustomActionButton onPress={this.hideAddNewBook}>
-                <Ionicons name="ios-close" size={40} color="white" />
+                <Ionicons name="ios-close-circle" size={40} color="#deada5" />
               </CustomActionButton>
               {/* <TouchableOpacity
                 onPress={() => this.addBook(this.state.textInputdata)}
@@ -147,7 +151,7 @@ class HomeScreen extends Component {
             ListEmptyComponent={
               <View style={styles.listEmptyComponent}>
                 <Text style={styles.listEmptyComponentText}>
-                  Not Reading any books
+                  You are not reading any books
                 </Text>
               </View>
             }
@@ -178,8 +182,6 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 70,
-    borderBottomWidth: 0.5,
-    borderBottomColor: colors.borderColor,
     alignItems: "center",
     justifyContent: "center"
   },

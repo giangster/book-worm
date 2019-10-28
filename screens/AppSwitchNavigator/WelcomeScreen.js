@@ -1,9 +1,9 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React from "react";
+import { View, Text } from "react-native";
 
-import { Ionicons } from '@expo/vector-icons';
-import colors from '../../assets/colors';
-import CustomActionButton from '../../components/CustomActionButton';
+import { Ionicons } from "@expo/vector-icons";
+import colors from "../../assets/colors";
+import CustomActionButton from "../../components/CustomActionButton";
 export default class WelcomeScreen extends React.Component {
   render() {
     return (
@@ -11,13 +11,13 @@ export default class WelcomeScreen extends React.Component {
         <View
           style={{
             flex: 1,
-            borderColor: 'black',
-            alignItems: 'center',
-            justifyContent: 'center'
+            borderColor: "black",
+            alignItems: "center",
+            justifyContent: "center"
           }}
         >
           <Ionicons name="ios-bookmarks" size={150} color={colors.logoColor} />
-          <Text style={{ fontSize: 50, fontWeight: '100', color: 'white' }}>
+          <Text style={{ fontSize: 50, fontWeight: "200", color: "#89cff0" }}>
             Book Worm
           </Text>
         </View>
@@ -25,33 +25,33 @@ export default class WelcomeScreen extends React.Component {
           style={{
             flex: 1,
 
-            alignItems: 'center'
+            alignItems: "center"
           }}
         >
           <CustomActionButton
             style={{
               width: 200,
-              backgroundColor: 'transparent',
+              backgroundColor: "transparent",
               borderWidth: 0.5,
               borderColor: colors.bgPrimary,
               marginBottom: 10
             }}
             title="Login in"
-            onPress={() => this.props.navigation.navigate('HomeScreen')}
+            onPress={() => this.props.navigation.navigate("HomeScreen")}
           >
-            <Text style={{ fontWeight: '100', color: 'white' }}>Login</Text>
+            <Text style={{ fontWeight: "500", color: "#89cff0" }}>Login</Text>
           </CustomActionButton>
           <CustomActionButton
             style={{
               width: 200,
-              backgroundColor: 'transparent',
+              backgroundColor: "transparent",
               borderWidth: 0.5,
-              borderColor: colors.bgError
+              borderColor: "#9C9C9C"
             }}
             title="Sign Up"
-            onPress={() => this.props.navigation.navigate('SignUpScreen')}
+            onPress={() => this.props.navigation.navigate("SignUpScreen")}
           >
-            <Text style={{ fontWeight: '100', color: 'white' }}>Sign Up</Text>
+            <Text style={{ fontWeight: "500", color: "#9C9C9C" }}>Sign Up</Text>
           </CustomActionButton>
         </View>
       </View>
