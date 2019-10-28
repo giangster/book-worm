@@ -16,7 +16,7 @@ export default class WelcomeScreen extends React.Component {
             justifyContent: "center"
           }}
         >
-          <Ionicons name="ios-bookmarks" size={150} color={colors.logoColor} />
+          <Ionicons name="ios-book" size={150} color={colors.logoColor} />
           <Text style={{ fontSize: 50, fontWeight: "200", color: "#89cff0" }}>
             Book Worm
           </Text>
@@ -24,7 +24,6 @@ export default class WelcomeScreen extends React.Component {
         <View
           style={{
             flex: 1,
-
             alignItems: "center"
           }}
         >
@@ -36,7 +35,6 @@ export default class WelcomeScreen extends React.Component {
               borderColor: colors.bgPrimary,
               marginBottom: 10
             }}
-            title="Login in"
             onPress={() => this.props.navigation.navigate("HomeScreen")}
           >
             <Text style={{ fontWeight: "500", color: "#89cff0" }}>Login</Text>
@@ -49,7 +47,7 @@ export default class WelcomeScreen extends React.Component {
               borderColor: "#9C9C9C"
             }}
             title="Sign Up"
-            onPress={() => this.props.navigation.navigate("SignUpScreen")}
+            onPress={() => this.props.navigation.navigate("LogInScreen")}
           >
             <Text style={{ fontWeight: "500", color: "#9C9C9C" }}>Sign Up</Text>
           </CustomActionButton>
