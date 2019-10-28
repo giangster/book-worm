@@ -19,6 +19,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { Ionicons } from "@expo/vector-icons";
 import { fromBinary } from "uuid-js";
+
 const App = () => <AppContainer />;
 
 const LoginStackNavigator = createStackNavigator({

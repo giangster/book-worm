@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList
-} from 'react-native';
-import BookCount from '../components/BookCount';
-import { Ionicons } from '@expo/vector-icons';
-import CustomActionButton from '../components/CustomActionButton';
-import colors from '../assets/colors';
-export default class HomeScreen extends React.Component {
+} from "react-native";
+import BookCount from "../components/BookCount";
+import { Ionicons } from "@expo/vector-icons";
+import CustomActionButton from "../components/CustomActionButton";
+import colors from "../assets/colors";
+
+class HomeScreen extends Component {
   constructor() {
     super();
     this.state = {
@@ -21,21 +22,21 @@ export default class HomeScreen extends React.Component {
       readCount: 0,
       isAddNewBookVisible: false,
       books: [],
-      textInputdata: ''
+      textInputdata: ""
     };
-    console.log('constructor');
+    console.log("constructor");
   }
 
   componentDidMount() {
-    console.log('did mount');
+    console.log("did mount");
   }
 
   componentDidUpdate() {
-    console.log('update');
+    console.log("update");
   }
 
   componentWillUnmount() {
-    console.log('unmount');
+    console.log("unmount");
   }
 
   showAddNewBook = () => {
@@ -83,7 +84,7 @@ export default class HomeScreen extends React.Component {
     </View>
   );
   render() {
-    console.log('render');
+    console.log("render");
     return (
       <View style={styles.container}>
         <SafeAreaView />
@@ -179,15 +180,15 @@ const styles = StyleSheet.create({
     height: 70,
     borderBottomWidth: 0.5,
     borderBottomColor: colors.borderColor,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center"
   },
   headerTitle: {
     fontSize: 24
   },
   textInputContainer: {
     height: 50,
-    flexDirection: 'row'
+    flexDirection: "row"
   },
   textInput: {
     flex: 1,
@@ -199,41 +200,43 @@ const styles = StyleSheet.create({
   },
   listItemContainer: {
     height: 50,
-    flexDirection: 'row'
+    flexDirection: "row"
   },
   listItemTitleContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingLeft: 5
   },
   listEmptyComponent: {
     marginTop: 50,
-    alignItems: 'center'
+    alignItems: "center"
   },
   listEmptyComponentText: {
-    fontWeight: 'bold'
+    fontWeight: "bold"
   },
   markAsReadButton: {
     width: 100,
     backgroundColor: colors.bgSuccess
   },
   markAsReadButtonText: {
-    fontWeight: 'bold',
-    color: 'white'
+    fontWeight: "bold",
+    color: "white"
   },
   addNewBookButton: {
     backgroundColor: colors.bgPrimary,
     borderRadius: 25
   },
   addNewBookButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 30
   },
   footer: {
     height: 70,
-    flexDirection: 'row',
+    flexDirection: "row",
     borderTopWidth: 0.5,
     borderTopColor: colors.borderColor
   }
 });
 5.4;
+
+export default HomeScreen;

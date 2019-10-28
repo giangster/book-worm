@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { Component } from "react";
+import { View, Text, StyleSheet } from "react-native";
 
-import CustomActionButton from '../components/CustomActionButton';
-import colors from '../assets/colors';
+import CustomActionButton from "../components/CustomActionButton";
+
+import colors from "../assets/colors";
 class SettingScreen extends Component {
   render() {
     return (
@@ -10,14 +11,14 @@ class SettingScreen extends Component {
         <CustomActionButton
           style={{
             width: 200,
-            backgroundColor: 'transparent',
+            backgroundColor: "transparent",
             borderWidth: 0.5,
             borderColor: colors.bgError
           }}
           title="Sign Up"
-          onPress={() => this.props.navigation.navigate('WelcomeScreen')}
+          onPress={() => this.props.navigation.navigate("WelcomeScreen")}
         >
-          <Text style={{ fontWeight: '100', color: 'white' }}>Logout</Text>
+          <Text style={{ fontWeight: "100", color: "white" }}>Logout</Text>
         </CustomActionButton>
       </View>
     );
@@ -28,8 +29,8 @@ export default SettingScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: colors.bgMain
   }
 });
