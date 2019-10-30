@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import colors from "../assets/colors";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import CustomActionButton from "../components/CustomActionButton";
@@ -22,11 +22,18 @@ class LogInScreen extends Component {
     }
 
     if (email && password) {
+      this.setState({ isLoading: true });
       try {
         const response = await firebase
           .auth()
           .signInWithEmailAndPassword(email, password);
+
+        if (response) {
+          this.setState({ isLoading: false });
+          //Navigate user to homescreen
+        }
       } catch (err) {
+        this.setState({ isLoading: false });
         switch (err.code) {
           case "auth/user-not-found":
             alert("User does not exists. Try signing up");
@@ -49,11 +56,18 @@ class LogInScreen extends Component {
     }
 
     if (email && password) {
+      this.setState({ isLoading: true });
       try {
         const response = await firebase
           .auth()
           .createUserWithEmailAndPassword(email, password);
+        if (response) {
+          this.setState({ isLoading: false });
+          //Sign in user
+          this.onSignIn(email, password);
+        }
       } catch (err) {
+        this.setState({ isLoading: false });
         if (err.code == "auth/email-already-in-use") {
           alert("User already exists. Try logging in");
         }
@@ -64,6 +78,21 @@ class LogInScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+        {this.state.isLoading ? (
+          <View
+            style={[
+              StyleSheet.absoluteFill,
+              {
+                alignItems: "center",
+                justifyContent: "center",
+                zIndex: 1000,
+                elevation: 1000
+              }
+            ]}
+          >
+            <ActivityIndicator size="large" color={colors.logoColor} />
+          </View>
+        ) : null}
         <View style={{ flex: 1, justifyContent: "center" }}>
           <TextInput
             style={styles.textInput}
