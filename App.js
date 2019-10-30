@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -20,8 +20,23 @@ import { createDrawerNavigator } from "react-navigation-drawer";
 import { Ionicons } from "@expo/vector-icons";
 import { fromBinary } from "uuid-js";
 import colors from "./assets/colors";
+import * as firebase from "firebase";
+import { firebaseConfig } from "./config/config";
 
-const App = () => <AppContainer />;
+class App extends Component {
+  constructor() {
+    super();
+    this.initializeFirebase();
+  }
+
+  initializeFirebase = () => {
+    firebase.initializeApp(firebaseConfig);
+  };
+
+  render() {
+    return <AppContainer />;
+  }
+}
 
 const LoginStackNavigator = createStackNavigator(
   {
