@@ -4,6 +4,7 @@ import { View, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../../assets/colors";
 import CustomActionButton from "../../components/CustomActionButton";
+
 export default class WelcomeScreen extends React.Component {
   render() {
     return (
@@ -35,7 +36,7 @@ export default class WelcomeScreen extends React.Component {
               borderColor: colors.bgPrimary,
               marginBottom: 10
             }}
-            onPress={() => this.props.navigation.navigate("HomeScreen")}
+            onPress={() => this.props.navigation.navigate("LogInScreen")}
           >
             <Text style={{ fontWeight: "500", color: "#89cff0" }}>Login</Text>
           </CustomActionButton>
