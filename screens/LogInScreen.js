@@ -18,7 +18,6 @@ class LogInScreen extends Component {
     //Early return technique
     if (!email || !password) {
       alert("Please enter email and password");
-      return;
     }
 
     if (email && password) {
@@ -30,7 +29,8 @@ class LogInScreen extends Component {
 
         if (response) {
           this.setState({ isLoading: false });
-          //Navigate user to homescreen
+          //Navigate user to loading screen
+          this.props.navigation.navigate("LoadingScreen");
         }
       } catch (err) {
         this.setState({ isLoading: false });

@@ -36,6 +36,7 @@ export default class WelcomeScreen extends React.Component {
               borderColor: colors.bgPrimary,
               marginBottom: 10
             }}
+            title="Login"
             onPress={() => this.props.navigation.navigate("LogInScreen")}
           >
             <Text style={{ fontWeight: "500", color: "#89cff0" }}>Login</Text>

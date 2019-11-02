@@ -10,6 +10,7 @@ import {
 } from "react-native";
 
 import WelcomeScreen from "./screens/AppSwitchNavigator/WelcomeScreen";
+import LoadingScreen from "./screens/AppSwitchNavigator/LoadingScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LogInScreen from "./screens/LogInScreen";
 import SettingsScreen from "./screens/SettingsScreen";
@@ -46,10 +47,7 @@ const LoginStackNavigator = createStackNavigator(
         header: null
       }
     },
-    LogInScreen: {
-      screen: LogInScreen,
-      navigationOptions: {}
-    }
+    LogInScreen
   },
   {
     mode: "modal",
@@ -84,6 +82,7 @@ const AppDrawerNavigator = createDrawerNavigator(
 );
 
 const AppSwitchNavigator = createSwitchNavigator({
+  LoadingScreen,
   LoginStackNavigator,
   AppDrawerNavigator
 });
