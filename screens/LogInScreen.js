@@ -5,6 +5,7 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import CustomActionButton from "../components/CustomActionButton";
 import * as firebase from "firebase";
 import "firebase/auth";
+import "firebase/database";
 
 class LogInScreen extends Component {
   constructor() {
@@ -64,7 +65,14 @@ class LogInScreen extends Component {
         if (response) {
           this.setState({ isLoading: false });
           //Sign in user
-          this.onSignIn(email, password);
+          const user = await firebase
+            .database()
+            .ref("users/")
+            .child(response.user.uid)
+            .set({ email: response.user.uid, uid: response.user.uid });
+          // this.onSignIn(email, password);
+
+          this.props.navigation.navigate("LoadingScreen");
         }
       } catch (err) {
         this.setState({ isLoading: false });
