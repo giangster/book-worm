@@ -25,12 +25,12 @@ class SettingScreen extends Component {
             width: 200,
             backgroundColor: "transparent",
             borderWidth: 0.5,
-            borderColor: colors.bgError
+            borderColor: "#9C9C9C"
           }}
-          title="Sign Up"
+          title="Logout"
           onPress={this.signOut}
         >
-          <Text style={{ fontWeight: "100", color: "white" }}>Logout</Text>
+          <Text style={{ fontWeight: "500", color: "#9C9C9C" }}>Logout</Text>
         </CustomActionButton>
       </View>
     );
