@@ -12,11 +12,13 @@ import BookCount from "../components/BookCount";
 import { Ionicons } from "@expo/vector-icons";
 import CustomActionButton from "../components/CustomActionButton";
 import colors from "../assets/colors";
+import * as firebase from "firebase/app"
 
 class HomeScreen extends Component {
   constructor() {
     super();
     this.state = {
+      currentUser:{},
       totalCount: 0,
       readingCount: 0,
       readCount: 0,
@@ -30,7 +32,12 @@ class HomeScreen extends Component {
   }
 
   componentDidMount() {
-    console.log("did mount");
+    const { navigation } = this.props;
+    const user = navigation.getParam("user");
+
+    const currentUSerData = await firebase.database().ref(`users/${user.uid}`).child(user.uid).once('value')
+
+    this.setState({currentUser:currentUSerData})
   }
 
   componentDidUpdate() {
