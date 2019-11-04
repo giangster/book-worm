@@ -37,7 +37,7 @@ class HomeScreen extends Component {
 
     const currentUSerData = await firebase.database().ref(`users/${user.uid}`).child(user.uid).once('value')
 
-    this.setState({currentUser:currentUSerData})
+    this.setState({currentUser:currentUSerData.val()})
   }
 
   componentDidUpdate() {
@@ -56,14 +56,24 @@ class HomeScreen extends Component {
     this.setState({ isAddNewBookVisible: false });
   };
 
-  addBook = book => {
-    this.setState({
-      books: [...this.state.books, book],
-      booksReading: [...this.state.books, book],
-      // totalCount: state.totalCount + 1,
-      // readingCount: state.readingCount + 1
-      isAddNewBookVisible: false
-    });
+  addBook = async book => {
+
+    try {
+      //books 
+        //users uid 
+          //book id(key)
+            //books data
+            const key = await firebase.database().ref("books").child(this.state.currentUser.uid).push().key
+            const response = await firebase.database().ref("books").child(this.state.currentUser.uid).child(key).set({name:book, read:false})
+
+    } catch(err){console.log(err)}
+    // this.setState({
+    //   books: [...this.state.books, book],
+    //   booksReading: [...this.state.books, book],
+    //   // totalCount: state.totalCount + 1,
+    //   // readingCount: state.readingCount + 1
+    //   isAddNewBookVisible: false
+    // });
   };
 
   markAsRead = (selectedBook, index) => {
