@@ -12,13 +12,13 @@ import BookCount from "../components/BookCount";
 import { Ionicons } from "@expo/vector-icons";
 import CustomActionButton from "../components/CustomActionButton";
 import colors from "../assets/colors";
-import * as firebase from "firebase/app"
+import * as firebase from "firebase/app";
 
 class HomeScreen extends Component {
   constructor() {
     super();
     this.state = {
-      currentUser:{},
+      currentUser: {},
       totalCount: 0,
       readingCount: 0,
       readCount: 0,
@@ -31,14 +31,18 @@ class HomeScreen extends Component {
     console.log("constructor");
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     const { navigation } = this.props;
     const user = navigation.getParam("user");
 
-    const currentUSerData = await firebase.database().ref(`users/${user.uid}`).child(user.uid).once('value')
+    const currentUserData = await firebase
+      .database()
+      .ref(`users/${user.uid}`)
+      .child(user.uid)
+      .once("value");
 
-    this.setState({currentUser:currentUSerData.val()})
-  }
+    this.setState({ currentUser: currentUserData.val() });
+  };
 
   componentDidUpdate() {
     console.log("update");
@@ -57,16 +61,43 @@ class HomeScreen extends Component {
   };
 
   addBook = async book => {
-
     try {
-      //books 
-        //users uid 
-          //book id(key)
-            //books data
-            const key = await firebase.database().ref("books").child(this.state.currentUser.uid).push().key
-            const response = await firebase.database().ref("books").child(this.state.currentUser.uid).child(key).set({name:book, read:false})
+      //books
+      //users uid
+      //book id(key)
+      //books data
 
-    } catch(err){console.log(err)}
+      const snapshot = await firebase
+        .database()
+        .ref("books")
+        .child(this.state.currentUser.uid)
+        .orderByChild("name")
+        .equalTo(book)
+        .once("value");
+
+      if (snapshot.exists()) {
+        alert("Book already exists");
+      } else {
+        const key = await firebase
+          .database()
+          .ref("books")
+          .child(this.state.currentUser.uid)
+          .push().key;
+      }
+      const key = await firebase
+        .database()
+        .ref("books")
+        .child(this.state.currentUser.uid)
+        .push().key;
+      const response = await firebase
+        .database()
+        .ref("books")
+        .child(this.state.currentUser.uid)
+        .child(key)
+        .set({ name: book, read: false });
+    } catch (err) {
+      console.log(err);
+    }
     // this.setState({
     //   books: [...this.state.books, book],
     //   booksReading: [...this.state.books, book],
