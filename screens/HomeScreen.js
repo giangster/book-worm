@@ -89,22 +89,24 @@ class HomeScreen extends Component {
         .ref("books")
         .child(this.state.currentUser.uid)
         .push().key;
+
       const response = await firebase
         .database()
         .ref("books")
         .child(this.state.currentUser.uid)
         .child(key)
         .set({ name: book, read: false });
+
+      this.setState({
+        books: [...this.state.books, book],
+        booksReading: [...this.state.books, book],
+        // totalCount: state.totalCount + 1,
+        // readingCount: state.readingCount + 1
+        isAddNewBookVisible: false
+      });
     } catch (err) {
       console.log(err);
     }
-    // this.setState({
-    //   books: [...this.state.books, book],
-    //   booksReading: [...this.state.books, book],
-    //   // totalCount: state.totalCount + 1,
-    //   // readingCount: state.readingCount + 1
-    //   isAddNewBookVisible: false
-    // });
   };
 
   markAsRead = (selectedBook, index) => {
