@@ -17,6 +17,7 @@ import colors from "../assets/colors";
 import * as firebase from "firebase/app";
 import { snapshotToArray } from "../helpers/firebaseHelpers";
 import ListItem from "../components/ListItem";
+import * as Animatable from "react-native-animatable";
 
 class HomeScreen extends Component {
   constructor() {
@@ -26,13 +27,12 @@ class HomeScreen extends Component {
       totalCount: 0,
       readingCount: 0,
       readCount: 0,
-      isAddNewBookVisible: false,
       books: [],
       booksReading: [],
       booksRead: [],
       textInputdata: ""
     };
-    console.log("constructor");
+    this.textInputRef = null;
   }
 
   componentDidMount = async () => {
@@ -77,6 +77,7 @@ class HomeScreen extends Component {
   };
 
   addBook = async book => {
+    this.textInputRef.setNativeProps({ text: "" });
     try {
       //books
       //users uid
@@ -116,9 +117,9 @@ class HomeScreen extends Component {
       this.setState({
         books: [...this.state.books, { name: book, read: false }],
         booksReading: [...this.state.books, { name: book, read: false }],
-        // totalCount: state.totalCount + 1,
-        // readingCount: state.readingCount + 1
-        isAddNewBookVisible: false
+        totalCount: state.totalCount + 1,
+        readingCount: state.readingCount + 1,
+        textInputdata: ""
       });
     } catch (err) {
       console.log(err);
@@ -150,9 +151,9 @@ class HomeScreen extends Component {
         booksRead: [
           ...this.state.booksRead,
           { name: selectedBook.name, read: true }
-        ]
-        // readingCount: this.state.readingCount - 1,
-        // readCount: this.state.readCount + 1
+        ],
+        readingCount: this.state.readingCount - 1,
+        readCount: this.state.readCount + 1
       });
     } catch (err) {
       console.log(err);
@@ -179,67 +180,26 @@ class HomeScreen extends Component {
   );
 
   render() {
-    console.log("render");
     return (
       <View style={styles.container}>
         <SafeAreaView />
+
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Book Worm</Text>
         </View>
+        <View style={styles.textInputContainer}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Enter Book Name"
+            placeholderTextColor="grey"
+            onChangeText={text => this.setState({ textInputdata: text })}
+            clearButtonMode="always"
+            ref={component => {
+              this.textInputRef = component;
+            }}
+          />
+        </View>
         <View style={styles.container}>
-          {this.state.isAddNewBookVisible && (
-            <View style={styles.textInputContainer}>
-              <TextInput
-                style={styles.textInput}
-                placeholder="Enter Book Name"
-                placeholderTextColor="grey"
-                onChangeText={text => this.setState({ textInputdata: text })}
-              />
-              <CustomActionButton
-                style={styles.checkmarkButton}
-                onPress={() => this.addBook(this.state.textInputdata)}
-              >
-                <Ionicons
-                  style={styles.bookReadIcon}
-                  name="ios-checkmark-circle"
-                  size={40}
-                  color="#89cff0"
-                />
-              </CustomActionButton>
-              <CustomActionButton onPress={this.hideAddNewBook}>
-                <Ionicons name="ios-close-circle" size={40} color="#deada5" />
-              </CustomActionButton>
-              {/* <TouchableOpacity
-                onPress={() => this.addBook(this.state.textInputdata)}
-              >
-                <View
-                  style={{
-                    width: 50,
-                    backgroundColor: colors.bgSuccess,
-                    height: 50,
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <Ionicons name="ios-checkmark" size={40} color="white" />
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this.hideAddNewBook}>
-                <View
-                  style={{
-                    width: 50,
-                    backgroundColor: '#deada5',
-                    height: 50,
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <Ionicons name="ios-close" size={40} color="white" />
-                </View>
-              </TouchableOpacity> */}
-            </View>
-          )}
-
           <FlatList
             data={this.state.books}
             renderItem={({ item }, index) => this.renderItem(item, index)}
@@ -252,13 +212,23 @@ class HomeScreen extends Component {
               </View>
             }
           />
-          <CustomActionButton
-            position="right"
-            style={styles.addNewBookButton}
-            onPress={this.showAddNewBook}
-          >
-            <Text style={styles.addNewBookButtonText}>+</Text>
-          </CustomActionButton>
+          {this.state.textInputdata.length ? (
+            <Animatable.View
+              animation={
+                this.state.textInputdata.length
+                  ? "slideInRight"
+                  : "slideOutRight"
+              }
+            >
+              <CustomActionButton
+                position="right"
+                style={styles.addNewBookButton}
+                onPress={() => this.addBook(this.state.textInputdata)}
+              >
+                <Text style={styles.addNewBookButtonText}>+</Text>
+              </CustomActionButton>
+            </Animatable.View>
+          ) : null}
         </View>
 
         <View style={styles.footer}>
@@ -285,16 +255,17 @@ const styles = StyleSheet.create({
     fontSize: 24
   },
   textInputContainer: {
-    height: 50,
+    height: 80,
     flexDirection: "row"
   },
   textInput: {
-    marginLeft: 5,
+    margin: 10,
     flex: 1,
-    borderBottomWidth: 0.5,
-    borderBottomColor: colors.txtPlaceholder,
+    borderWidth: 0.5,
+    borderColor: colors.txtPlaceholder,
     backgroundColor: colors.bgMain,
-    paddingLeft: 5
+    padding: 10,
+    fontSize: 20
   },
   checkmarkButton: {
     backgroundColor: colors.bgSuccess
