@@ -13,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CustomActionButton from "../components/CustomActionButton";
 import colors from "../assets/colors";
 import * as firebase from "firebase/app";
+import { snapshotToArray } from "../helpers/firebaseHelpers";
 
 class HomeScreen extends Component {
   constructor() {
@@ -37,11 +38,18 @@ class HomeScreen extends Component {
 
     const currentUserData = await firebase
       .database()
-      .ref(`users/${user.uid}`)
+      .ref(`users`)
       .child(user.uid)
       .once("value");
 
-    this.setState({ currentUser: currentUserData.val() });
+    const books = await firebase
+      .database()
+      .ref("books")
+      .child(user.uid)
+      .once("value");
+
+    const booksArray = snapshotToArray(books);
+    this.setState({ currentUser: currentUserData.val(), books: booksArray });
   };
 
   componentDidUpdate() {
@@ -127,7 +135,7 @@ class HomeScreen extends Component {
   renderItem = (item, index) => (
     <View style={styles.listItemContainer}>
       <View style={styles.listItemTitleContainer}>
-        <Text>{item}</Text>
+        <Text>{item.name}</Text>
       </View>
       <CustomActionButton
         style={styles.markAsReadButton}
@@ -247,8 +255,11 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   textInput: {
+    marginLeft: 5,
     flex: 1,
-    backgroundColor: colors.bgTextInput,
+    borderBottomWidth: 0.5,
+    borderBottomColor: colors.txtPlaceholder,
+    backgroundColor: colors.bgMain,
     paddingLeft: 5
   },
   checkmarkButton: {
@@ -256,12 +267,14 @@ const styles = StyleSheet.create({
   },
   listItemContainer: {
     height: 50,
-    flexDirection: "row"
+    flexDirection: "row",
+    color: "grey"
   },
   listItemTitleContainer: {
     flex: 1,
     justifyContent: "center",
-    paddingLeft: 5
+    paddingLeft: 5,
+    color: "grey"
   },
   listEmptyComponent: {
     marginTop: 50,
@@ -272,7 +285,7 @@ const styles = StyleSheet.create({
   },
   markAsReadButton: {
     width: 100,
-    backgroundColor: colors.bgSuccess
+    backgroundColor: colors.bgPrimary
   },
   markAsReadButtonText: {
     fontWeight: "bold",
