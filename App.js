@@ -63,14 +63,39 @@ const LoginStackNavigator = createStackNavigator(
 );
 
 const HomeTabNavigator = createBottomTabNavigator({
-  HomeScreen,
-  BooksReadingScreen,
-  BooksReadScreen
+  HomeScreen: {
+    screen: HomeScreen,
+    navigationOptions: {
+      tabBarLabel: "Total"
+    }
+  },
+  BooksReadingScreen: {
+    screen: BooksReadingScreen,
+    navigationOptions: {
+      tabBarLabel: "Reading"
+    }
+  },
+  BooksReadScreen: {
+    screen: BooksReadScreen,
+    navigationOptions: {
+      tabBarLabel: "Read"
+    }
+  }
+});
+
+const HomeStackNavigator = createStackNavigator({
+  HomeTabNavigator
 });
 
 const AppDrawerNavigator = createDrawerNavigator(
   {
-    HomeTabNavigator,
+    HomeStackNavigator: {
+      screen: HomeStackNavigator,
+      navigationOptions: {
+        title: "Home",
+        drawerIcon: () => <Ionicons name="ios-home" size={24} />
+      }
+    },
     SettingsScreen: {
       screen: SettingsScreen,
       navigationOptions: {

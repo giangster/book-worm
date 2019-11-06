@@ -183,10 +183,6 @@ class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <SafeAreaView />
-
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Book Worm</Text>
-        </View>
         <View style={styles.textInputContainer}>
           <TextInput
             style={styles.textInput}
@@ -231,11 +227,11 @@ class HomeScreen extends Component {
           ) : null}
         </View>
 
-        <View style={styles.footer}>
+        {/* <View style={styles.footer}>
           <BookCount count={this.state.books.length} title="Total" />
           <BookCount count={this.state.booksReading.length} title="Reading" />
           <BookCount count={this.state.booksRead.length} title="Read" />
-        </View>
+        </View> */}
         <SafeAreaView />
       </View>
     );
