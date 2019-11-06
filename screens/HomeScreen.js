@@ -6,8 +6,10 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
-  FlatList
+  FlatList,
+  Image
 } from "react-native";
+import { setCustomText } from "react-native-global-props";
 import BookCount from "../components/BookCount";
 import { Ionicons } from "@expo/vector-icons";
 import CustomActionButton from "../components/CustomActionButton";
@@ -122,46 +124,65 @@ class HomeScreen extends Component {
     }
   };
 
-  markAsRead = (selectedBook, index) => {
-    let books = this.state.books.map(book => {
-      if (book.name === selectedBook.name) {
-        return { ...books, read: true };
-      }
-      return book;
-    });
-    let booksReading = this.state.booksReading.filter(
-      book => book != selectedBook.name
-    );
+  markAsRead = async (selectedBook, index) => {
+    try {
+      await firebase
+        .database()
+        .ref("books")
+        .child(this.state.currentUser.uid)
+        .child(selectedBook.key)
+        .update({ read: true });
 
-    this.setState({
-      books: books,
-      booksReading: booksReading,
-      booksRead: [
-        ...this.state.booksRead,
-        { name: selectedBook.name, read: true }
-      ],
-      readingCount: this.state.readingCount - 1,
-      readCount: this.state.readCount + 1
-    });
+      let books = this.state.books.map(book => {
+        if (book.name === selectedBook.name) {
+          return { ...book, read: true };
+        }
+        return book;
+      });
+      let booksReading = this.state.booksReading.filter(
+        book => book != selectedBook.name
+      );
+
+      this.setState({
+        books: books,
+        booksReading: booksReading,
+        booksRead: [
+          ...this.state.booksRead,
+          { name: selectedBook.name, read: true }
+        ]
+        // readingCount: this.state.readingCount - 1,
+        // readCount: this.state.readCount + 1
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   renderItem = (item, index) => (
     <View style={styles.listItemContainer}>
+      <View style={styles.imageContainer}>
+        <Image source={require("../assets/icon.png")} style={styles.image} />
+      </View>
       <View style={styles.listItemTitleContainer}>
-        <Text>{item.name}</Text>
+        <Text style={{ fontSize: 18 }}>{item.name}</Text>
       </View>
       {item.read ? (
-        <Ionicons name="ios-checkmark-circle" size={40} color="#89cff0" />
+        <View style={styles.bookReadIcon}>
+          <Ionicons name="ios-checkmark-circle" size={40} color="#89cff0" />
+        </View>
       ) : (
         <CustomActionButton
           style={styles.markAsReadButton}
           onPress={() => this.markAsRead(item, index)}
         >
-          <Text style={styles.markAsReadButtonText}>Mark as read</Text>
+          <Text style={{ color: colors.bgMain, fontWeight: "600" }}>
+            Mark as read
+          </Text>
         </CustomActionButton>
       )}
     </View>
   );
+
   render() {
     console.log("render");
     return (
@@ -184,6 +205,7 @@ class HomeScreen extends Component {
                 onPress={() => this.addBook(this.state.textInputdata)}
               >
                 <Ionicons
+                  style={styles.bookReadIcon}
                   name="ios-checkmark-circle"
                   size={40}
                   color="#89cff0"
@@ -283,9 +305,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bgSuccess
   },
   listItemContainer: {
-    height: 50,
+    minHeight: 70,
+    marginHorizontal: 10,
     flexDirection: "row",
-    color: "grey"
+    backgroundColor: colors.bgMain,
+    marginVertical: 5,
+    borderWidth: 0.5,
+    borderColor: colors.bgPrimary
   },
   listItemTitleContainer: {
     flex: 1,
@@ -302,14 +328,17 @@ const styles = StyleSheet.create({
   },
   markAsReadButton: {
     width: 100,
+    marginTop: 10,
+    marginRight: 10,
     backgroundColor: colors.bgPrimary
   },
   markAsReadButtonText: {
     fontWeight: "bold",
     color: "white"
   },
+  bookReadIcon: { marginVertical: 20, marginRight: 10 },
   addNewBookButton: {
-    backgroundColor: colors.bgPrimary,
+    backgroundColor: "#354D58DA",
     borderRadius: 25
   },
   addNewBookButtonText: {
@@ -324,5 +353,13 @@ const styles = StyleSheet.create({
   }
 });
 5.4;
+
+const customTextProps = {
+  style: {
+    fontFamily: "Avenir-Book"
+  }
+};
+
+setCustomText(customTextProps);
 
 export default HomeScreen;
