@@ -14,10 +14,13 @@ import LoadingScreen from "./screens/AppSwitchNavigator/LoadingScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LogInScreen from "./screens/LogInScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import BooksReadingScreen from "./screens/HomeTabNavigator/BooksReadingScreen";
+import BooksReadScreen from "./screens/HomeTabNavigator/BooksReadScreen";
 import CustomDrawerComponent from "./screens/DrawerNavigator/CustomDrawerComponent";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
+import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { fromBinary } from "uuid-js";
 import colors from "./assets/colors";
@@ -59,15 +62,15 @@ const LoginStackNavigator = createStackNavigator(
   }
 );
 
+const HomeTabNavigator = createBottomTabNavigator({
+  HomeScreen,
+  BooksReadingScreen,
+  BooksReadScreen
+});
+
 const AppDrawerNavigator = createDrawerNavigator(
   {
-    HomeScreen: {
-      screen: HomeScreen,
-      navigationOptions: {
-        title: "Home",
-        drawerIcon: () => <Ionicons name="ios-home" size={24} />
-      }
-    },
+    HomeTabNavigator,
     SettingsScreen: {
       screen: SettingsScreen,
       navigationOptions: {
