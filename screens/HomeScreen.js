@@ -49,7 +49,12 @@ class HomeScreen extends Component {
       .once("value");
 
     const booksArray = snapshotToArray(books);
-    this.setState({ currentUser: currentUserData.val(), books: booksArray });
+    this.setState({
+      currentUser: currentUserData.val(),
+      books: booksArray,
+      booksReading: booksArray.filter(book => book != book.read),
+      booksRead: booksArray.filter(book => book.read)
+    });
   };
 
   componentDidUpdate() {
@@ -106,8 +111,8 @@ class HomeScreen extends Component {
         .set({ name: book, read: false });
 
       this.setState({
-        books: [...this.state.books, book],
-        booksReading: [...this.state.books, book],
+        books: [...this.state.books, { name: book, read: false }],
+        booksReading: [...this.state.books, { name: book, read: false }],
         // totalCount: state.totalCount + 1,
         // readingCount: state.readingCount + 1
         isAddNewBookVisible: false
@@ -118,15 +123,23 @@ class HomeScreen extends Component {
   };
 
   markAsRead = (selectedBook, index) => {
-    let books = this.state.books.filter(book => book !== selectedBook);
+    let books = this.state.books.map(book => {
+      if (book.name === selectedBook.name) {
+        return { ...books, read: true };
+      }
+      return book;
+    });
     let booksReading = this.state.booksReading.filter(
-      book => book != selectedBook
+      book => book != selectedBook.name
     );
 
     this.setState({
       books: books,
       booksReading: booksReading,
-      booksRead: [...this.state.booksRead, selectedBook],
+      booksRead: [
+        ...this.state.booksRead,
+        { name: selectedBook.name, read: true }
+      ],
       readingCount: this.state.readingCount - 1,
       readCount: this.state.readCount + 1
     });
@@ -137,12 +150,16 @@ class HomeScreen extends Component {
       <View style={styles.listItemTitleContainer}>
         <Text>{item.name}</Text>
       </View>
-      <CustomActionButton
-        style={styles.markAsReadButton}
-        onPress={() => this.markAsRead(item, index)}
-      >
-        <Text style={styles.markAsReadButtonText}>Mark as read</Text>
-      </CustomActionButton>
+      {item.read ? (
+        <Ionicons name="ios-checkmark-circle" size={40} color="#89cff0" />
+      ) : (
+        <CustomActionButton
+          style={styles.markAsReadButton}
+          onPress={() => this.markAsRead(item, index)}
+        >
+          <Text style={styles.markAsReadButtonText}>Mark as read</Text>
+        </CustomActionButton>
+      )}
     </View>
   );
   render() {
