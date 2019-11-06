@@ -6,11 +6,9 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
-  FlatList,
-  Image
+  FlatList
 } from "react-native";
 import { setCustomText } from "react-native-global-props";
-import BookCount from "../components/BookCount";
 import { Ionicons } from "@expo/vector-icons";
 import CustomActionButton from "../components/CustomActionButton";
 import colors from "../assets/colors";
@@ -18,6 +16,7 @@ import * as firebase from "firebase/app";
 import { snapshotToArray } from "../helpers/firebaseHelpers";
 import ListItem from "../components/ListItem";
 import * as Animatable from "react-native-animatable";
+import { connect } from "react-redux";
 
 class HomeScreen extends Component {
   constructor() {
@@ -58,6 +57,9 @@ class HomeScreen extends Component {
       booksReading: booksArray.filter(book => book != book.read),
       booksRead: booksArray.filter(book => book.read)
     });
+
+    this.props.loadAllBooks(booksArray);
+    console.log(this.props.books);
   };
 
   componentDidUpdate() {
@@ -77,7 +79,6 @@ class HomeScreen extends Component {
   };
 
   addBook = async book => {
-    this.textInputRef.setNativeProps({ text: "" });
     try {
       //books
       //users uid
@@ -118,12 +119,14 @@ class HomeScreen extends Component {
         books: [...this.state.books, { name: book, read: false }],
         booksReading: [...this.state.books, { name: book, read: false }],
         totalCount: state.totalCount + 1,
-        readingCount: state.readingCount + 1,
-        textInputdata: ""
+        readingCount: state.readingCount + 1
       });
     } catch (err) {
       console.log(err);
     }
+
+    this.textInputRef.setNativeProps({ text: "" });
+    this.setState({ textInputdata: "" });
   };
 
   markAsRead = async (selectedBook, index) => {
@@ -226,12 +229,6 @@ class HomeScreen extends Component {
             </Animatable.View>
           ) : null}
         </View>
-
-        {/* <View style={styles.footer}>
-          <BookCount count={this.state.books.length} title="Total" />
-          <BookCount count={this.state.booksReading.length} title="Reading" />
-          <BookCount count={this.state.booksRead.length} title="Read" />
-        </View> */}
         <SafeAreaView />
       </View>
     );
@@ -276,7 +273,7 @@ const styles = StyleSheet.create({
   },
   markAsReadButton: {
     width: 100,
-    marginTop: 10,
+    marginVertical: 15,
     marginRight: 10,
     backgroundColor: colors.bgPrimary
   },
@@ -310,4 +307,18 @@ const customTextProps = {
 
 setCustomText(customTextProps);
 
-export default HomeScreen;
+const mapStateToProps = state => ({
+  books: state.books
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loadAllBooks: books =>
+      dispatch({ type: "LOAD_BOOKS_FROM_SERVER", payload: books })
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeScreen);

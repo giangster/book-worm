@@ -22,10 +22,11 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import { fromBinary } from "uuid-js";
+import { Provider } from "react-redux";
 import colors from "./assets/colors";
 import * as firebase from "firebase";
 import { firebaseConfig } from "./config/config";
+import store from "./redux/store";
 
 class App extends Component {
   constructor() {
@@ -38,7 +39,11 @@ class App extends Component {
   };
 
   render() {
-    return <AppContainer />;
+    return (
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    );
   }
 }
 

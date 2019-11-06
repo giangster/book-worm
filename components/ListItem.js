@@ -20,7 +20,7 @@ export default ListItem;
 
 const styles = StyleSheet.create({
   listItemContainer: {
-    minHeight: 70,
+    minHeight: 80,
     marginHorizontal: 10,
     flexDirection: "row",
     backgroundColor: colors.bgMain,
