@@ -16,6 +16,7 @@ import CustomActionButton from "../components/CustomActionButton";
 import colors from "../assets/colors";
 import * as firebase from "firebase/app";
 import { snapshotToArray } from "../helpers/firebaseHelpers";
+import ListItem from "../components/ListItem";
 
 class HomeScreen extends Component {
   constructor() {
@@ -159,13 +160,7 @@ class HomeScreen extends Component {
   };
 
   renderItem = (item, index) => (
-    <View style={styles.listItemContainer}>
-      <View style={styles.imageContainer}>
-        <Image source={require("../assets/icon.png")} style={styles.image} />
-      </View>
-      <View style={styles.listItemTitleContainer}>
-        <Text style={{ fontSize: 18 }}>{item.name}</Text>
-      </View>
+    <ListItem item={item}>
       {item.read ? (
         <View style={styles.bookReadIcon}>
           <Ionicons name="ios-checkmark-circle" size={40} color="#89cff0" />
@@ -180,7 +175,7 @@ class HomeScreen extends Component {
           </Text>
         </CustomActionButton>
       )}
-    </View>
+    </ListItem>
   );
 
   render() {
@@ -304,21 +299,7 @@ const styles = StyleSheet.create({
   checkmarkButton: {
     backgroundColor: colors.bgSuccess
   },
-  listItemContainer: {
-    minHeight: 70,
-    marginHorizontal: 10,
-    flexDirection: "row",
-    backgroundColor: colors.bgMain,
-    marginVertical: 5,
-    borderWidth: 0.5,
-    borderColor: colors.bgPrimary
-  },
-  listItemTitleContainer: {
-    flex: 1,
-    justifyContent: "center",
-    paddingLeft: 5,
-    color: "grey"
-  },
+
   listEmptyComponent: {
     marginTop: 50,
     alignItems: "center"
