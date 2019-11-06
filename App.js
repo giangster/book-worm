@@ -62,30 +62,86 @@ const LoginStackNavigator = createStackNavigator(
   }
 );
 
-const HomeTabNavigator = createBottomTabNavigator({
-  HomeScreen: {
-    screen: HomeScreen,
-    navigationOptions: {
-      tabBarLabel: "Total"
+const HomeTabNavigator = createBottomTabNavigator(
+  {
+    HomeScreen: {
+      screen: HomeScreen,
+      navigationOptions: {
+        tabBarLabel: "Total"
+      }
+    },
+    BooksReadingScreen: {
+      screen: BooksReadingScreen,
+      navigationOptions: {
+        tabBarLabel: "Reading"
+      }
+    },
+    BooksReadScreen: {
+      screen: BooksReadScreen,
+      navigationOptions: {
+        tabBarLabel: "Read"
+      }
     }
   },
-  BooksReadingScreen: {
-    screen: BooksReadingScreen,
-    navigationOptions: {
-      tabBarLabel: "Reading"
-    }
-  },
-  BooksReadScreen: {
-    screen: BooksReadScreen,
-    navigationOptions: {
-      tabBarLabel: "Read"
+  {
+    tabBarOptions: {
+      style: {
+        backgroundColor: colors.bgMain
+      },
+      activeTintColor: colors.bgPrimary,
+      inactiveTintColor: colors.bgTextInput
     }
   }
-});
+);
 
-const HomeStackNavigator = createStackNavigator({
-  HomeTabNavigator
-});
+HomeTabNavigator.navigationOptions = ({ navigation }) => {
+  const { routeName } = navigation.state.routes[navigation.state.index];
+  switch (routeName) {
+    case "HomeScreen":
+      return {
+        headerTitle: "Total"
+      };
+    case "BooksReadingScreen":
+      return {
+        headerTitle: "Reading"
+      };
+    case "BooksReadScreen":
+      return {
+        headerTitle: "Read "
+      };
+    default:
+      return { headerTitle: "Book Worm" };
+  }
+};
+
+const HomeStackNavigator = createStackNavigator(
+  {
+    HomeTabNavigator: {
+      screen: HomeTabNavigator,
+      navigationOptions: ({ navigation }) => {
+        return {
+          headerLeft: (
+            <Ionicons
+              name="ios-menu"
+              size={30}
+              color={colors.bgMain}
+              onPress={() => navigation.openDrawer()}
+              style={{ marginLeft: 10 }}
+            />
+          )
+        };
+      }
+    }
+  },
+  {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: colors.bgPrimary
+      },
+      headerTintColor: colors.bgMain
+    }
+  }
+);
 
 const AppDrawerNavigator = createDrawerNavigator(
   {
