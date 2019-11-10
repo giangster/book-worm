@@ -222,7 +222,7 @@ class HomeScreen extends Component {
               <CustomActionButton
                 position="right"
                 style={styles.addNewBookButton}
-                onPress={() => this.addBook(this.state.textInputdata)}
+                onPress={() => this.props.addBook(this.state.textInputdata)}
               >
                 <Text style={styles.addNewBookButtonText}>+</Text>
               </CustomActionButton>
@@ -314,7 +314,13 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     loadAllBooks: books =>
-      dispatch({ type: "LOAD_BOOKS_FROM_SERVER", payload: books })
+      dispatch({ type: "LOAD_BOOKS_FROM_SERVER", payload: books }),
+    addBook: book => {
+      dispatch({ type: "ADD_BOOK", payload: book });
+    },
+    markBookAsRead: book => {
+      dispatch({ type: "MARK_BOOK_AS_READ", payload: book });
+    }
   };
 };
 
