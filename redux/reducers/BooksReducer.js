@@ -14,6 +14,26 @@ const books = (state = initialState, action) => {
         booksRead: action.payload.filter(book => book.read)
       };
     }
+
+    case "ADD_BOOK": {
+      return {
+        ...state,
+        books: [action.payload, ...state, books],
+        booksReading: [action.payload, ...state, booksReading]
+      };
+    }
+
+    case "MARK_BOOK_AS_READ": {
+      return {
+        ...state,
+        books: state.books.map(book => {
+          if (book.name === action.payload.name) {
+            return { ...book, read: true };
+          }
+          return book;
+        })
+      };
+    }
     default:
       return state;
   }
