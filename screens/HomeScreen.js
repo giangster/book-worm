@@ -172,7 +172,7 @@ class HomeScreen extends Component {
       ) : (
         <CustomActionButton
           style={styles.markAsReadButton}
-          onPress={() => this.markAsRead(item, index)}
+          onPress={() => this.props.markAsRead(item, index)}
         >
           <Text style={{ color: colors.bgMain, fontWeight: "600" }}>
             Mark as read
