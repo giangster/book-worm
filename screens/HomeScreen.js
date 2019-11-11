@@ -53,12 +53,10 @@ class HomeScreen extends Component {
     const booksArray = snapshotToArray(books);
     this.setState({
       currentUser: currentUserData.val(),
-      books: booksArray,
-      booksReading: booksArray.filter(book => book != book.read),
-      booksRead: booksArray.filter(book => book.read)
+      
     });
 
-    this.props.loadAllBooks(booksArray);
+    this.props.loadAllBooks(booksArray.reverse());
     console.log(this.props.books);
   };
 
@@ -114,15 +112,8 @@ class HomeScreen extends Component {
         .child(this.state.currentUser.uid)
         .child(key)
         .set({ name: book, read: false });
+        this.props.addBook({ name: book, read: false, key: key });
 
-      this.setState({
-        books: [...this.state.books, { name: book, read: false }],
-        booksReading: [...this.state.books, { name: book, read: false }],
-        totalCount: state.totalCount + 1,
-        readingCount: state.readingCount + 1
-      });
-
-      this.props.addBook({ name: book, read: false, key: key });
     } catch (err) {
       console.log(err);
     }
