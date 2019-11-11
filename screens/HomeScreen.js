@@ -121,6 +121,8 @@ class HomeScreen extends Component {
         totalCount: state.totalCount + 1,
         readingCount: state.readingCount + 1
       });
+
+      this.props.addBook({ name: book, read: false, key: key });
     } catch (err) {
       console.log(err);
     }
@@ -158,6 +160,8 @@ class HomeScreen extends Component {
         readingCount: this.state.readingCount - 1,
         readCount: this.state.readCount + 1
       });
+
+      this.props.markAsRead(selectedBook);
     } catch (err) {
       console.log(err);
     }
@@ -200,7 +204,7 @@ class HomeScreen extends Component {
         </View>
         <View style={styles.container}>
           <FlatList
-            data={this.state.books}
+            data={this.props.books}
             renderItem={({ item }, index) => this.renderItem(item, index)}
             keyExtractor={(item, index) => index.toString()}
             ListEmptyComponent={
@@ -311,8 +315,8 @@ const mapStateToProps = state => ({
   books: state.books
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
+const mapDispatchToProps = dispatch => ({
+
     loadAllBooks: books =>
       dispatch({ type: "LOAD_BOOKS_FROM_SERVER", payload: books }),
     addBook: book => {
@@ -320,9 +324,13 @@ const mapDispatchToProps = dispatch => {
     },
     markBookAsRead: book => {
       dispatch({ type: "MARK_BOOK_AS_READ", payload: book });
-    }
+    
   };
-};
+});
+
+const mapStateToProps = state=>({
+  books:state.books
+})
 
 export default connect(
   mapStateToProps,
