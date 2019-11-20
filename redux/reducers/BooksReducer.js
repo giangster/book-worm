@@ -18,8 +18,8 @@ const books = (state = initialState, action) => {
     case "ADD_BOOK": {
       return {
         ...state,
-        books: [action.payload, ...state, books],
-        booksReading: [action.payload, ...state, booksReading]
+        books: [action.payload, ...state.books],
+        booksReading: [action.payload, ...state.booksReading]
       };
     }
 

@@ -40,7 +40,7 @@ class HomeScreen extends Component {
 
     const currentUserData = await firebase
       .database()
-      .ref(`users`)
+      .ref("users")
       .child(user.uid)
       .once("value");
 
@@ -51,6 +51,7 @@ class HomeScreen extends Component {
       .once("value");
 
     const booksArray = snapshotToArray(books);
+
     this.setState({
       currentUser: currentUserData.val()
     });
@@ -58,6 +59,14 @@ class HomeScreen extends Component {
     this.props.loadAllBooks(booksArray.reverse());
     console.log(this.props.books);
   };
+
+  componentDidUpdate() {
+    console.log("update");
+  }
+
+  componentWillUnmount() {
+    console.log("unmount");
+  }
 
   showAddNewBook = () => {
     this.setState({ isAddNewBookVisible: true });
@@ -137,7 +146,7 @@ class HomeScreen extends Component {
         readCount: this.state.readCount + 1
       });
 
-      this.props.markAsRead(selectedBook);
+      this.props.markBookAsRead(selectedBook);
     } catch (err) {
       console.log(err);
     }
@@ -152,7 +161,7 @@ class HomeScreen extends Component {
       ) : (
         <CustomActionButton
           style={styles.markAsReadButton}
-          onPress={() => this.props.markBookAsRead(item, index)}
+          onPress={() => this.markAsRead(item, index)}
         >
           <Text style={{ color: colors.bgMain, fontWeight: "600" }}>
             Mark as read
@@ -178,38 +187,35 @@ class HomeScreen extends Component {
             }}
           />
         </View>
-        <View style={styles.container}>
-          <FlatList
-            data={this.props.books.books}
-            renderItem={({ item }, index) => this.renderItem(item, index)}
-            keyExtractor={(item, index) => index.toString()}
-            ListEmptyComponent={
-              <View style={styles.listEmptyComponent}>
-                <Text style={styles.listEmptyComponentText}>
-                  You are not reading any books
-                </Text>
-              </View>
-            }
-          />
-          {this.state.textInputdata.length ? (
-            <Animatable.View
-              animation={
-                this.state.textInputdata.length
-                  ? "slideInRight"
-                  : "slideOutRight"
-              }
-            >
-              <CustomActionButton
-                position="right"
-                style={styles.addNewBookButton}
-                onPress={() => this.props.addBook(this.state.textInputdata)}
-              >
-                <Text style={styles.addNewBookButtonText}>+</Text>
-              </CustomActionButton>
-            </Animatable.View>
-          ) : null}
-        </View>
-        <SafeAreaView />
+        {/* <View style={styles.container}> */}
+        <FlatList
+          data={this.props.books.books}
+          renderItem={({ item }, index) => this.renderItem(item, index)}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={
+            <View style={styles.listEmptyComponent}>
+              <Text style={styles.listEmptyComponentText}>
+                You are not reading any books
+              </Text>
+            </View>
+          }
+        />
+
+        <Animatable.View
+          animation={
+            this.state.textInputdata.length > 0
+              ? "slideInRight"
+              : "slideOutRight"
+          }
+        >
+          <CustomActionButton
+            position="right"
+            style={styles.addNewBookButton}
+            onPress={() => this.addBook(this.state.textInputdata)}
+          >
+            <Text style={styles.addNewBookButtonText}>+</Text>
+          </CustomActionButton>
+        </Animatable.View>
       </View>
     );
   }
