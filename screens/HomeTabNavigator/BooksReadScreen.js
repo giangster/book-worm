@@ -17,7 +17,7 @@ class BooksReadScreen extends Component {
           ListEmptyComponent={
             <View style={styles.listEmptyComponent}>
               <Text style={styles.listEmptyComponentText}>
-                You are not reading any books
+                You have not read any books
               </Text>
             </View>
           }
