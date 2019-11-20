@@ -1,31 +1,29 @@
-import React, { Component } from "react";
+import React from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import colors from "../../assets/colors";
 import ListItem from "../../components/ListItem";
 import { connect } from "react-redux";
 
-class BooksReadingScreen extends Component {
-  renderItem = item => <ListItem item={item} />;
+const BooksReadingScreen = props => {
+  const renderItem = item => <ListItem item={item} />;
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <FlatList
-          data={this.props.books.booksReading}
-          renderItem={({ item }, index) => this.renderItem(item)}
-          keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={
-            <View style={styles.listEmptyComponent}>
-              <Text style={styles.listEmptyComponentText}>
-                You are not reading any books
-              </Text>
-            </View>
-          }
-        />
-      </View>
-    );
-  }
-}
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={props.books.booksReading}
+        renderItem={({ item }, index) => renderItem(item)}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={
+          <View style={styles.listEmptyComponent}>
+            <Text style={styles.listEmptyComponentText}>
+              You are not reading any books
+            </Text>
+          </View>
+        }
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
