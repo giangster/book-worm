@@ -180,6 +180,25 @@ class HomeScreen extends Component {
     }
   };
 
+  deleteBook = async (selectedBook, index) => {
+    try {
+      this.props.isLoadingBook(true);
+
+      await firebase
+        .database()
+        .ref("books")
+        .child(this.state.currentUser.uid)
+        .child(selectedBook.key)
+        .remove();
+
+      this.props.deleteBook(selectedBook);
+      this.props.isLoadingBook(false);
+    } catch (error) {
+      console.log(error);
+      this.props.isLoadingBook(false);
+    }
+  };
+
   renderItem = (item, index) => {
     let swipeoutButtons = [
       {
@@ -192,7 +211,7 @@ class HomeScreen extends Component {
           </View>
         ),
         backgroundColor: colors.bgDelete,
-        onPress: () => alert("delete book")
+        onPress: () => this.deleteBook(item, index)
       }
     ];
 
@@ -407,7 +426,8 @@ const mapDispatchToProps = dispatch => ({
   isLoadingBook: boolean =>
     dispatch({ type: "TOGGLE_IS_LOADING_BOOKS", payload: boolean }),
   markBookAsUnread: book =>
-    dispatch({ type: "MARK_BOOK_AS_UNREAD", payload: book })
+    dispatch({ type: "MARK_BOOK_AS_UNREAD", payload: book }),
+  deleteBook: book => dispatch({ type: "DELETE_BOOK", payload: book })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

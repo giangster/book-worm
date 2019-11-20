@@ -55,6 +55,18 @@ const books = (state = initialState, action) => {
         booksReading: [...state.booksReading, action.payload]
       };
 
+    case "DELETE_BOOK":
+      return {
+        ...state,
+        books: state.books.filter(book => book.name !== action.payload.name),
+        booksRead: state.booksRead.filter(
+          book => book.name !== action.payload.name
+        ),
+        booksReading: state.booksReading.filter(
+          book => book.name !== action.payload.name
+        )
+      };
+
     case "TOGGLE_IS_LOADING_BOOKS": {
       return {
         ...state,
