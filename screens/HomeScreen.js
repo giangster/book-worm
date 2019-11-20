@@ -161,6 +161,25 @@ class HomeScreen extends Component {
     }
   };
 
+  markAsUnread = async (selectedBook, index) => {
+    try {
+      this.props.toggleIsLoadingBooks(true);
+
+      await firebase
+        .database()
+        .ref("books")
+        .child(this.state.currentUser.uid)
+        .child(selectedBook.key)
+        .update({ read: false });
+
+      this.props.markBookAsUnread(selectedBook);
+      this.props.toggleIsLoadingBooks(false);
+    } catch (error) {
+      console.log(error);
+      this.props.toggleIsLoadingBooks(false);
+    }
+  };
+
   renderItem = (item, index) => {
     let swipeoutButtons = [
       {
@@ -213,20 +232,21 @@ class HomeScreen extends Component {
         backgroundColor={colors.bgMain}
         right={swipeoutButtons}
       >
-        <ListItem item={item}>
-          {item.read ? (
+        <ListItem
+          onPress={() => this.addBookImage(item)}
+          editable={true}
+          marginVertical={0}
+          item={item}
+        >
+          {item.read && (
             <View style={styles.bookReadIcon}>
-              <Ionicons name="ios-checkmark-circle" size={40} color="#89cff0" />
+              <Ionicons
+                style={{ marginRight: 5 }}
+                name="ios-checkmark-circle"
+                color={colors.logoColor}
+                size={40}
+              />
             </View>
-          ) : (
-            <CustomActionButton
-              style={styles.markAsReadButton}
-              onPress={() => this.markAsRead(item, index)}
-            >
-              <Text style={{ color: colors.bgMain, fontWeight: "600" }}>
-                Mark as read
-              </Text>
-            </CustomActionButton>
           )}
         </ListItem>
       </Swipeout>
