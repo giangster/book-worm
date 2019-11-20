@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: 60,
     height: 60,
-    marginLeft: 10,
+    margin: 10,
     marginVertical: 10
   },
   image: { flex: 1, height: null, width: null, borderRadius: 30 },
