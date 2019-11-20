@@ -208,11 +208,13 @@ class HomeScreen extends Component {
           renderItem={({ item }, index) => this.renderItem(item, index)}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={
-            <View style={styles.listEmptyComponent}>
-              <Text style={styles.listEmptyComponentText}>
-                You are not reading any books
-              </Text>
-            </View>
+            !this.props.books.isLoading && (
+              <View style={styles.listEmptyComponent}>
+                <Text style={styles.listEmptyComponentText}>
+                  You are not reading any books
+                </Text>
+              </View>
+            )
           }
         />
 
