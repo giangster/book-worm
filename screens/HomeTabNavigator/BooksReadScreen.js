@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  ActivityIndicator
+} from "react-native";
 import colors from "../../assets/colors";
 import ListItem from "../../components/ListItem";
 import { connect } from "react-redux";
@@ -9,6 +15,19 @@ const BooksReadScreen = props => {
 
   return (
     <View style={styles.container}>
+      {props.isLoading && (
+        <View
+          style={{
+            ...StyleSheet.absoluteFill,
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+            elevation: 1000
+          }}
+        >
+          <ActivityIndicator size="large" color={colors.logoColor} />
+        </View>
+      )}
       <FlatList
         data={props.books.booksRead}
         renderItem={({ item }, index) => renderItem(item)}

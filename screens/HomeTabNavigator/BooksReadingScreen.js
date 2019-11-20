@@ -15,7 +15,7 @@ const BooksReadingScreen = props => {
 
   return (
     <View style={styles.container}>
-      {this.props.isLoading && (
+      {props.isLoading && (
         <View
           style={{
             ...StyleSheet.absoluteFill,
