@@ -1,7 +1,8 @@
 const initialState = {
   books: [],
   booksReading: [],
-  booksRead: []
+  booksRead: [],
+  isLoading: true
 };
 
 const books = (state = initialState, action) => {
@@ -36,6 +37,13 @@ const books = (state = initialState, action) => {
         booksReading: state.booksReading.filter(
           book => book.name !== action.payload.name
         )
+      };
+    }
+
+    case "TOGGLE_IS_LOADING_BOOKS": {
+      return {
+        ...state,
+        isLoading: action.payload
       };
     }
     default:

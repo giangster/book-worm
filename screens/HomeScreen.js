@@ -4,7 +4,7 @@ import {
   Text,
   View,
   SafeAreaView,
-  TouchableOpacity,
+  ActivityIndicator,
   TextInput,
   FlatList
 } from "react-native";
@@ -57,7 +57,7 @@ class HomeScreen extends Component {
     });
 
     this.props.loadAllBooks(booksArray.reverse());
-    console.log(this.props.books);
+    this.props.isLoadingBook(false);
   };
 
   componentDidUpdate() {
@@ -175,6 +175,21 @@ class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <SafeAreaView />
+
+        {this.props.isLoading && (
+          <View
+            style={{
+              ...StyleSheet.absoluteFill,
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 1000,
+              elevation: 1000
+            }}
+          >
+            <ActivityIndicator size="large" color={colors.logoColor} />
+          </View>
+        )}
+
         <View style={styles.textInputContainer}>
           <TextInput
             style={styles.textInput}
@@ -301,7 +316,10 @@ const mapDispatchToProps = dispatch => ({
   loadAllBooks: books =>
     dispatch({ type: "LOAD_BOOKS_FROM_SERVER", payload: books }),
   addBook: book => dispatch({ type: "ADD_BOOK", payload: book }),
-  markBookAsRead: book => dispatch({ type: "MARK_BOOK_AS_READ", payload: book })
+  markBookAsRead: book =>
+    dispatch({ type: "MARK_BOOK_AS_READ", payload: book }),
+  isLoadingBook: boolean =>
+    dispatch({ type: "TOGGLE_IS_LOADING_BOOKS", payload: boolean })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
