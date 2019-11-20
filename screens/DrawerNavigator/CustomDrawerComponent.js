@@ -5,12 +5,12 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
-  Platform
+  Platform,
+  Image
 } from "react-native";
 
 import { DrawerItems } from "react-navigation-drawer";
 import colors from "../../assets/colors";
-import { Ionicons } from "@expo/vector-icons";
 
 const CustomDrawerNavigator = props => {
   return (
@@ -25,8 +25,11 @@ const CustomDrawerNavigator = props => {
           paddingTop: Platform.OS == "android" ? 20 : 0
         }}
       >
-        <Ionicons name="ios-bookmarks" size={100} color={colors.logoColor} />
-        <Text style={{ fontSize: 24, color: "white", fontWeight: "100" }}>
+        <Image
+          style={{ width: 70, height: 70, marginBottom: 20 }}
+          source={require("../../assets/icon.png")}
+        />
+        <Text style={{ fontSize: 24, color: "#89cff0", fontWeight: "100" }}>
           Book Worm
         </Text>
       </View>

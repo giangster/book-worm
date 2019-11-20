@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
-
+import { View, Text, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../../assets/colors";
 import CustomActionButton from "../../components/CustomActionButton";
@@ -16,7 +15,10 @@ const WelcomeScreen = props => {
           justifyContent: "center"
         }}
       >
-        <Ionicons name="ios-book" size={150} color={colors.logoColor} />
+        <Image
+          style={{ width: 150, height: 150, marginBottom: 20 }}
+          source={require("../../assets/icon.png")}
+        />
         <Text style={{ fontSize: 50, fontWeight: "200", color: "#89cff0" }}>
           Book Worm
         </Text>
