@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import colors from "../assets/colors";
-import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
+import { TextInput } from "react-native-gesture-handler";
 import CustomActionButton from "../components/CustomActionButton";
 import * as firebase from "firebase";
 import "firebase/auth";

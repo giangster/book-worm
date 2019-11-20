@@ -59,14 +59,6 @@ class HomeScreen extends Component {
     console.log(this.props.books);
   };
 
-  componentDidUpdate() {
-    console.log("update");
-  }
-
-  componentWillUnmount() {
-    console.log("unmount");
-  }
-
   showAddNewBook = () => {
     this.setState({ isAddNewBookVisible: true });
   };
