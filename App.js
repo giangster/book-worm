@@ -1,14 +1,4 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  TextInput,
-  FlatList
-} from "react-native";
-
 import WelcomeScreen from "./screens/AppSwitchNavigator/WelcomeScreen";
 import LoadingScreen from "./screens/AppSwitchNavigator/LoadingScreen";
 import HomeScreen from "./screens/HomeScreen";

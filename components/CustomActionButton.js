@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import Proptypes from "prop-types";
 import colors from "../assets/colors";
+
 function getPosition(position) {
   switch (position) {
     case "left":
