@@ -4,28 +4,26 @@ import colors from "../../assets/colors";
 import ListItem from "../../components/ListItem";
 import { connect } from "react-redux";
 
-class BooksReadScreen extends Component {
-  renderItem = item => <ListItem item={item} />;
+const BooksReadScreen = props => {
+  const renderItem = item => <ListItem item={item} />;
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <FlatList
-          data={this.props.books.booksRead}
-          renderItem={({ item }, index) => this.renderItem(item)}
-          keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={
-            <View style={styles.listEmptyComponent}>
-              <Text style={styles.listEmptyComponentText}>
-                You have not read any books
-              </Text>
-            </View>
-          }
-        />
-      </View>
-    );
-  }
-}
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={props.books.booksRead}
+        renderItem={({ item }, index) => renderItem(item)}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={
+          <View style={styles.listEmptyComponent}>
+            <Text style={styles.listEmptyComponentText}>
+              You have not read any books
+            </Text>
+          </View>
+        }
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
