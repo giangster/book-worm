@@ -1,11 +1,27 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import colors from "../../assets/colors";
+import ListItem from "../../components/ListItem";
+import { connect } from "react-redux";
 
-export default class BooksReadScreen extends Component {
+class BooksReadScreen extends Component {
+  renderItem = item => <ListItem item={item} />;
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Books Read</Text>
+        <FlatList
+          data={this.props.books.booksRead}
+          renderItem={({ item }, index) => this.renderItem(item)}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={
+            <View style={styles.listEmptyComponent}>
+              <Text style={styles.listEmptyComponentText}>
+                You are not reading any books
+              </Text>
+            </View>
+          }
+        />
       </View>
     );
   }
@@ -14,7 +30,19 @@ export default class BooksReadScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: colors.bgMain
+  },
+  listEmptyComponent: {
+    marginTop: 50,
+    alignItems: "center"
+  },
+  listEmptyComponentText: {
+    fontWeight: "bold"
   }
 });
+
+const mapStateToProps = state => ({
+  books: state.books
+});
+
+export default connect(mapStateToProps, null)(BooksReadScreen);
