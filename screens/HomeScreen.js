@@ -52,8 +52,7 @@ class HomeScreen extends Component {
 
     const booksArray = snapshotToArray(books);
     this.setState({
-      currentUser: currentUserData.val(),
-      
+      currentUser: currentUserData.val()
     });
 
     this.props.loadAllBooks(booksArray.reverse());
@@ -77,6 +76,8 @@ class HomeScreen extends Component {
   };
 
   addBook = async book => {
+    this.textInputRef.setNativeProps({ text: "" });
+    this.setState({ textInputdata: "" });
     try {
       //books
       //users uid
@@ -99,27 +100,19 @@ class HomeScreen extends Component {
           .ref("books")
           .child(this.state.currentUser.uid)
           .push().key;
-      }
-      const key = await firebase
-        .database()
-        .ref("books")
-        .child(this.state.currentUser.uid)
-        .push().key;
 
-      const response = await firebase
-        .database()
-        .ref("books")
-        .child(this.state.currentUser.uid)
-        .child(key)
-        .set({ name: book, read: false });
+        const response = await firebase
+          .database()
+          .ref("books")
+          .child(this.state.currentUser.uid)
+          .child(key)
+          .set({ name: book, read: false });
+
         this.props.addBook({ name: book, read: false, key: key });
-
+      }
     } catch (err) {
       console.log(err);
     }
-
-    this.textInputRef.setNativeProps({ text: "" });
-    this.setState({ textInputdata: "" });
   };
 
   markAsRead = async (selectedBook, index) => {
@@ -195,7 +188,7 @@ class HomeScreen extends Component {
         </View>
         <View style={styles.container}>
           <FlatList
-            data={this.props.books}
+            data={this.props.books.books}
             renderItem={({ item }, index) => this.renderItem(item, index)}
             keyExtractor={(item, index) => index.toString()}
             ListEmptyComponent={
@@ -307,23 +300,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
-    loadAllBooks: books =>
-      dispatch({ type: "LOAD_BOOKS_FROM_SERVER", payload: books }),
-    addBook: book => {
-      dispatch({ type: "ADD_BOOK", payload: book });
-    },
-    markBookAsRead: book => {
-      dispatch({ type: "MARK_BOOK_AS_READ", payload: book });
-    
-  };
+  loadAllBooks: books =>
+    dispatch({ type: "LOAD_BOOKS_FROM_SERVER", payload: books }),
+  addBook: book => dispatch({ type: "ADD_BOOK", payload: book }),
+  markBookAsRead: book => dispatch({ type: "MARK_BOOK_AS_READ", payload: book })
 });
 
-const mapStateToProps = state=>({
-  books:state.books
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
