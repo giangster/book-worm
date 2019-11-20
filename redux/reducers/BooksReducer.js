@@ -31,7 +31,11 @@ const books = (state = initialState, action) => {
             return { ...book, read: true };
           }
           return book;
-        })
+        }),
+        booksRead: [...state.booksRead, action.payload],
+        booksReading: state.booksReading.filter(
+          book => book.name !== action.payload.name
+        )
       };
     }
     default:
