@@ -163,7 +163,7 @@ class HomeScreen extends Component {
 
   markAsUnread = async (selectedBook, index) => {
     try {
-      this.props.toggleIsLoadingBooks(true);
+      this.props.isLoadingBook(true);
 
       await firebase
         .database()
@@ -173,10 +173,10 @@ class HomeScreen extends Component {
         .update({ read: false });
 
       this.props.markBookAsUnread(selectedBook);
-      this.props.toggleIsLoadingBooks(false);
+      this.props.isLoadingBook(false);
     } catch (error) {
       console.log(error);
-      this.props.toggleIsLoadingBooks(false);
+      this.props.isLoadingBook(false);
     }
   };
 
@@ -203,10 +203,12 @@ class HomeScreen extends Component {
           <View
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
-            <Text style={{ color: colors.txtWhite }}>Mark as Read</Text>
+            <Text style={{ color: colors.bgMain, fontWeight: "600" }}>
+              Mark as Read
+            </Text>
           </View>
         ),
-        backgroundColor: colors.bgSuccessDark,
+        backgroundColor: colors.bgPrimary,
         onPress: () => this.markAsRead(item, index)
       });
     } else {
@@ -221,7 +223,7 @@ class HomeScreen extends Component {
             </Text>
           </View>
         ),
-        backgroundColor: colors.bgPrimary,
+        backgroundColor: colors.bgTextInput,
         onPress: () => this.markAsUnread(item, index)
       });
     }
@@ -403,7 +405,9 @@ const mapDispatchToProps = dispatch => ({
   markBookAsRead: book =>
     dispatch({ type: "MARK_BOOK_AS_READ", payload: book }),
   isLoadingBook: boolean =>
-    dispatch({ type: "TOGGLE_IS_LOADING_BOOKS", payload: boolean })
+    dispatch({ type: "TOGGLE_IS_LOADING_BOOKS", payload: boolean }),
+  markBookAsUnread: book =>
+    dispatch({ type: "MARK_BOOK_AS_UNREAD", payload: book })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
