@@ -33,11 +33,13 @@ const BooksReadingScreen = props => {
         renderItem={({ item }, index) => renderItem(item)}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={
-          <View style={styles.listEmptyComponent}>
-            <Text style={styles.listEmptyComponentText}>
-              You are not reading any books
-            </Text>
-          </View>
+          !props.books.isLoading && (
+            <View style={styles.listEmptyComponent}>
+              <Text style={styles.listEmptyComponentText}>
+                You are not reading any books
+              </Text>
+            </View>
+          )
         }
       />
     </View>
