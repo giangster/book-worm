@@ -2,7 +2,7 @@
 
 A book application built with React Native and Firebase.
 
-![Login screen](screenshots/IMG_1063.PNG?raw=true |width=100)
+![Login screen](screenshots/IMG_1063.PNG?raw=true "Login screen")<!-- .element height="50%" width="50%" -->
 ![Login screen](screenshots/IMG_1064.PNG?raw=true "Login screen")
 ![Home screen](screenshots/IMG_1065.PNG?raw=true "Home screen")
 ![Home screen](screenshots/IMG_1066.PNG?raw=true "Home screen")
