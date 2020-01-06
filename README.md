@@ -2,7 +2,9 @@
 
 A book application built with React Native and Firebase.
 
-![Login screen](screenshots/IMG_1063.PNG?raw=true "Login screen"){:height="400px"}
+<img src="screenshots/IMG_1063.PNG?raw=true" height="400" title="Login screen">
+
+![Login screen]( "Login screen")
 ![Login screen](screenshots/IMG_1064.PNG?raw=true "Login screen")
 
 <!-- .element height="400px" -->
