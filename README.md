@@ -1,6 +1,9 @@
 # book-worm
 
-A book application built with React Native and Firebase.
+A basic simple mobile application for bookworms where reading books can be added, as well as updated (from reading to read for example). Application built with React Native and Firebase.
+
+
+**Screenshots**
 
 <div display="flex" padding="30">
 <img src="screenshots/IMG_1063.PNG?raw=true" height="500" title="Login screen">
